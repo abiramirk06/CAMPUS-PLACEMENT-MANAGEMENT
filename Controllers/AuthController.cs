@@ -1,6 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿
+using System.ComponentModel.DataAnnotations;
 using CampusPlacementManagement.Models;
 using CampusPlacementManagement.Services;
+using CampusPlacementManagement.Repositories;
+using CampusPlacementManagement.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -13,21 +16,26 @@ namespace CampusPlacementManagement.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IJwtService _jwtService;
+        private readonly IPlacementOfficerRepository _placementOfficerRepository;
 
         public AuthController(
             UserManager<ApplicationUser> userManager,
-            IJwtService jwtService)
+            IJwtService jwtService,
+            IPlacementOfficerRepository placementOfficerRepository)
         {
             _userManager = userManager;
             _jwtService = jwtService;
+            _placementOfficerRepository = placementOfficerRepository;
         }
 
         [HttpPost("login")]
         [AllowAnonymous]
-        public async Task<IActionResult> Login([FromBody] LoginRequest request)
+        public async Task<IActionResult> Login(
+            [FromBody] LoginRequest request)
         {
-            var user = await _userManager.FindByEmailAsync(
-                request.Email.Trim());
+            string email = request.Email.Trim().ToLowerInvariant();
+
+            var user = await _userManager.FindByEmailAsync(email);
 
             if (user == null)
             {
@@ -46,6 +54,31 @@ namespace CampusPlacementManagement.Controllers
                 {
                     message = "Invalid email or password."
                 });
+            }
+
+            // Check Placement Officer approval status.
+            var placementOfficer =
+                await _placementOfficerRepository.GetByUserIdAsync(user.Id);
+
+            if (placementOfficer != null)
+            {
+                if (placementOfficer.Status != PlacementOfficerStatus.Approved)
+                {
+                    return Unauthorized(new
+                    {
+                        message = "Your placement officer account is not approved or active."
+                    });
+                }
+
+                // The officer's college must also be approved.
+                if (placementOfficer.College == null ||
+                    placementOfficer.College.Status != CollegeStatus.Approved)
+                {
+                    return Unauthorized(new
+                    {
+                        message = "Your college is not currently approved."
+                    });
+                }
             }
 
             var roles = await _userManager.GetRolesAsync(user);
