@@ -166,3 +166,5 @@ C:\Users\R. ABIRAMI\Desktop\CampusPlacementManagement\CampusPlacementManagement\
 C:\Users\R. ABIRAMI\Desktop\CampusPlacementManagement\CampusPlacementManagement\obj\Debug\net10.0\CampusPlacementManagement.pdb
 C:\Users\R. ABIRAMI\Desktop\CampusPlacementManagement\CampusPlacementManagement\obj\Debug\net10.0\CampusPlacementManagement.genruntimeconfig.cache
 C:\Users\R. ABIRAMI\Desktop\CampusPlacementManagement\CampusPlacementManagement\obj\Debug\net10.0\ref\CampusPlacementManagement.dll
+C:\Users\R. ABIRAMI\Desktop\CampusPlacementManagement\CampusPlacementManagement\obj\Debug\net10.0\CampusPlacementManagement.sourcelink.json
+C:\Users\R. ABIRAMI\Desktop\CampusPlacementManagement\CampusPlacementManagement\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt

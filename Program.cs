@@ -1,7 +1,13 @@
 using CampusPlacementManagement.Data;
 using Microsoft.EntityFrameworkCore;
+using CampusPlacementManagement.Repositories;
+using CampusPlacementManagement.Services;
+
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddScoped<ICollegeRepository, CollegeRepository>();
+builder.Services.AddScoped<ICollegeService, CollegeService>();
 
 // Controllers
 builder.Services.AddControllers();
