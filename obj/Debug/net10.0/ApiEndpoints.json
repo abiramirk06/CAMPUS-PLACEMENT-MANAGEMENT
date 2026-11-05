@@ -1,5 +1,21 @@
 [
   {
+    "ContainingType": "CampusPlacementManagement.Controllers.AuthController",
+    "Method": "Login",
+    "RelativePath": "api/auth/login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "CampusPlacementManagement.Controllers.LoginRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "CampusPlacementManagement.Controllers.CollegesController",
     "Method": "GetAll",
     "RelativePath": "api/colleges",

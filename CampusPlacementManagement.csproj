@@ -22,4 +22,8 @@
     <PackageReference Include="System.Security.Cryptography.Pkcs" Version="9.0.22" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DTOs\Auth\" />
+  </ItemGroup>
+
 </Project>
