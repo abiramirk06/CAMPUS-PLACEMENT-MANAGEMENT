@@ -146,7 +146,53 @@ namespace CampusPlacementManagement.Migrations
                     b.HasIndex("CollegeCode")
                         .IsUnique();
 
+                    b.HasIndex("OfficialEmail")
+                        .IsUnique();
+
                     b.ToTable("Colleges");
+                });
+
+            modelBuilder.Entity("CampusPlacementManagement.Models.PlacementOfficer", b =>
+                {
+                    b.Property<int>("PlacementOfficerId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PlacementOfficerId"));
+
+                    b.Property<DateTime?>("ApprovedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ApprovedBy")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("CollegeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Designation")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("PlacementOfficerId");
+
+                    b.HasIndex("ApprovedBy");
+
+                    b.HasIndex("CollegeId");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("PlacementOfficers");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -282,6 +328,32 @@ namespace CampusPlacementManagement.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("CampusPlacementManagement.Models.PlacementOfficer", b =>
+                {
+                    b.HasOne("CampusPlacementManagement.Models.ApplicationUser", "ApprovedByUser")
+                        .WithMany("ApprovedPlacementOfficers")
+                        .HasForeignKey("ApprovedBy")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("CampusPlacementManagement.Models.College", "College")
+                        .WithMany("PlacementOfficers")
+                        .HasForeignKey("CollegeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("CampusPlacementManagement.Models.ApplicationUser", "User")
+                        .WithOne("PlacementOfficer")
+                        .HasForeignKey("CampusPlacementManagement.Models.PlacementOfficer", "UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("ApprovedByUser");
+
+                    b.Navigation("College");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -331,6 +403,18 @@ namespace CampusPlacementManagement.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("CampusPlacementManagement.Models.ApplicationUser", b =>
+                {
+                    b.Navigation("ApprovedPlacementOfficers");
+
+                    b.Navigation("PlacementOfficer");
+                });
+
+            modelBuilder.Entity("CampusPlacementManagement.Models.College", b =>
+                {
+                    b.Navigation("PlacementOfficers");
                 });
 #pragma warning restore 612, 618
         }

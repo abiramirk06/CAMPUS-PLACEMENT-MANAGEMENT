@@ -66,6 +66,8 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddScoped<ICollegeRepository, CollegeRepository>();
 builder.Services.AddScoped<ICollegeService, CollegeService>();
 builder.Services.AddScoped<IJwtService, JwtService>();
+builder.Services.AddScoped<IPlacementOfficerRepository, PlacementOfficerRepository>();
+builder.Services.AddScoped<IPlacementOfficerService, PlacementOfficerService>();
 
 // Controllers and OpenAPI
 builder.Services.AddControllers();

@@ -239,6 +239,170 @@
         }
       }
     },
+    "/api/placement-officers/register": {
+      "post": {
+        "tags": [
+          "PlacementOfficers"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterPlacementOfficerRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterPlacementOfficerRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterPlacementOfficerRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/placement-officers": {
+      "get": {
+        "tags": [
+          "PlacementOfficers"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/placement-officers/pending": {
+      "get": {
+        "tags": [
+          "PlacementOfficers"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/placement-officers/{id}": {
+      "get": {
+        "tags": [
+          "PlacementOfficers"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/placement-officers/{id}/approve": {
+      "put": {
+        "tags": [
+          "PlacementOfficers"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/placement-officers/{id}/reject": {
+      "put": {
+        "tags": [
+          "PlacementOfficers"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/placement-officers/{id}/suspend": {
+      "put": {
+        "tags": [
+          "PlacementOfficers"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/placement-officers/me": {
+      "get": {
+        "tags": [
+          "PlacementOfficers"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/WeatherForecast": {
       "get": {
         "tags": [
@@ -350,6 +514,47 @@
           }
         }
       },
+      "RegisterPlacementOfficerRequest": {
+        "required": [
+          "fullName",
+          "email",
+          "phoneNumber",
+          "password",
+          "collegeId",
+          "designation"
+        ],
+        "type": "object",
+        "properties": {
+          "fullName": {
+            "maxLength": 150,
+            "type": "string"
+          },
+          "email": {
+            "maxLength": 256,
+            "type": "string"
+          },
+          "phoneNumber": {
+            "maxLength": 20,
+            "type": "string"
+          },
+          "password": {
+            "minLength": 8,
+            "type": "string"
+          },
+          "collegeId": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "designation": {
+            "maxLength": 100,
+            "type": "string"
+          }
+        }
+      },
       "UpdateCollegeRequest": {
         "required": [
           "collegeName",
@@ -443,6 +648,9 @@
     },
     {
       "name": "Colleges"
+    },
+    {
+      "name": "PlacementOfficers"
     },
     {
       "name": "WeatherForecast"

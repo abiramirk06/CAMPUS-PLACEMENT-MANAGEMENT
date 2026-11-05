@@ -41,5 +41,9 @@ namespace CampusPlacementManagement.Models
 
         [Required]
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+        // One college can have multiple placement officers
+        public ICollection<PlacementOfficer> PlacementOfficers
+        { get; set; } = new List<PlacementOfficer>();
     }
 }

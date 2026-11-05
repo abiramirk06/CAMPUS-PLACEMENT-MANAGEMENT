@@ -137,6 +137,116 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "CampusPlacementManagement.Controllers.PlacementOfficersController",
+    "Method": "GetAll",
+    "RelativePath": "api/placement-officers",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CampusPlacementManagement.Controllers.PlacementOfficersController",
+    "Method": "GetById",
+    "RelativePath": "api/placement-officers/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CampusPlacementManagement.Controllers.PlacementOfficersController",
+    "Method": "Approve",
+    "RelativePath": "api/placement-officers/{id}/approve",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CampusPlacementManagement.Controllers.PlacementOfficersController",
+    "Method": "Reject",
+    "RelativePath": "api/placement-officers/{id}/reject",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CampusPlacementManagement.Controllers.PlacementOfficersController",
+    "Method": "Suspend",
+    "RelativePath": "api/placement-officers/{id}/suspend",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CampusPlacementManagement.Controllers.PlacementOfficersController",
+    "Method": "GetMyProfile",
+    "RelativePath": "api/placement-officers/me",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CampusPlacementManagement.Controllers.PlacementOfficersController",
+    "Method": "GetPending",
+    "RelativePath": "api/placement-officers/pending",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CampusPlacementManagement.Controllers.PlacementOfficersController",
+    "Method": "Register",
+    "RelativePath": "api/placement-officers/register",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "CampusPlacementManagement.DTOs.PlacementOfficer.RegisterPlacementOfficerRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "CampusPlacementManagement.Controllers.WeatherForecastController",
     "Method": "Get",
     "RelativePath": "WeatherForecast",
