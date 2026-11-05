@@ -15,5 +15,7 @@ namespace CampusPlacementManagement.Models
         // One SuperAdmin can approve multiple PlacementOfficer accounts
         public ICollection<PlacementOfficer> ApprovedPlacementOfficers
         { get; set; } = new List<PlacementOfficer>();
+
+        public Student? Student { get; set; }
     }
 }

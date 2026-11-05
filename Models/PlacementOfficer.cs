@@ -31,5 +31,8 @@ namespace CampusPlacementManagement.Models
         public College? College { get; set; }
 
         public ApplicationUser? ApprovedByUser { get; set; }
+
+        public ICollection<Student> Students { get; set; }
+    = new List<Student>();
     }
 }

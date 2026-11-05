@@ -17,27 +17,30 @@ namespace CampusPlacementManagement.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IJwtService _jwtService;
         private readonly IPlacementOfficerRepository _placementOfficerRepository;
+        private readonly IStudentRepository _studentRepository;
 
         public AuthController(
             UserManager<ApplicationUser> userManager,
             IJwtService jwtService,
-            IPlacementOfficerRepository placementOfficerRepository)
+            IPlacementOfficerRepository placementOfficerRepository,
+            IStudentRepository studentRepository)
         {
             _userManager = userManager;
             _jwtService = jwtService;
             _placementOfficerRepository = placementOfficerRepository;
+            _studentRepository = studentRepository;
         }
 
         [HttpPost("login")]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(
-            [FromBody] LoginRequest request)
+        public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
             string email = request.Email.Trim().ToLowerInvariant();
 
             var user = await _userManager.FindByEmailAsync(email);
 
-            if (user == null)
+            if (user == null ||
+                !await _userManager.CheckPasswordAsync(user, request.Password))
             {
                 return Unauthorized(new
                 {
@@ -45,24 +48,12 @@ namespace CampusPlacementManagement.Controllers
                 });
             }
 
-            bool passwordValid = await _userManager.CheckPasswordAsync(
-                user, request.Password);
+            // Placement Officer approval check
+            var officer = await _placementOfficerRepository.GetByUserIdAsync(user.Id);
 
-            if (!passwordValid)
+            if (officer != null)
             {
-                return Unauthorized(new
-                {
-                    message = "Invalid email or password."
-                });
-            }
-
-            // Check Placement Officer approval status.
-            var placementOfficer =
-                await _placementOfficerRepository.GetByUserIdAsync(user.Id);
-
-            if (placementOfficer != null)
-            {
-                if (placementOfficer.Status != PlacementOfficerStatus.Approved)
+                if (officer.Status != PlacementOfficerStatus.Approved)
                 {
                     return Unauthorized(new
                     {
@@ -70,9 +61,31 @@ namespace CampusPlacementManagement.Controllers
                     });
                 }
 
-                // The officer's college must also be approved.
-                if (placementOfficer.College == null ||
-                    placementOfficer.College.Status != CollegeStatus.Approved)
+                if (officer.College == null ||
+                    officer.College.Status != CollegeStatus.Approved)
+                {
+                    return Unauthorized(new
+                    {
+                        message = "Your college is not currently approved."
+                    });
+                }
+            }
+
+            // Student approval check
+            var student = await _studentRepository.GetByUserIdAsync(user.Id);
+
+            if (student != null)
+            {
+                if (student.Status != StudentStatus.Approved)
+                {
+                    return Unauthorized(new
+                    {
+                        message = "Your student account is not approved or active."
+                    });
+                }
+
+                if (student.College == null ||
+                    student.College.Status != CollegeStatus.Approved)
                 {
                     return Unauthorized(new
                     {

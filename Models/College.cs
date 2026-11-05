@@ -45,5 +45,8 @@ namespace CampusPlacementManagement.Models
         // One college can have multiple placement officers
         public ICollection<PlacementOfficer> PlacementOfficers
         { get; set; } = new List<PlacementOfficer>();
+
+        public ICollection<Student> Students { get; set; }
+    = new List<Student>();
     }
 }
